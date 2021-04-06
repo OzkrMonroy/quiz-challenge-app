@@ -1,6 +1,6 @@
 import Option from '../option/option.component';
 import { ReactComponent as Logo } from '../../assets/adventure.svg';
-import { CardBody, CardContainer, CardHeader } from './card.styles';
+import { CardBody, CardButton, CardContainer, CardFooter, CardHeader } from './card.styles';
 
 const Card = () => {
   return (
@@ -15,6 +15,9 @@ const Card = () => {
         <Option/>
         <Option/>
         <Option/>
+        <CardFooter>
+          <CardButton>Next</CardButton>
+        </CardFooter>
       </CardBody>
     </CardContainer>
   )
