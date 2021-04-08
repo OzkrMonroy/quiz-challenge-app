@@ -15,11 +15,13 @@ const Home = ({history}) => {
   }
 
   return (
-    <Card 
-      logo={true} 
-      bodyTitle={title} 
-      options={optionsQuiz} 
-      eventHandler={handleSetTypeOfQuiz}/>
+    <Card
+      logo={true}
+      bodyTitle={title}
+      options={optionsQuiz}
+      eventHandler={handleSetTypeOfQuiz}
+      inputName="quizType"
+    />
   )
 }
 // Kuala Lumpur is the capital of

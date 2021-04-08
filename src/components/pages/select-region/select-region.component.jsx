@@ -2,7 +2,7 @@ import Card from "../../card/card.component"
 
 const SelectRegion = () => {
   const title = "Select the region";
-  const regions = ["africa", "americas", "asia", "europe", "oceania"];
+  const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
   return (
     <Card
       logo

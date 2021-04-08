@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { OptionContainer } from "./option.styles";
 
-const Option = ({optionText, index, optionEventHandler}) => {
-  const letterOptions = ["A", "B", "C", "D"];
+const Option = ({optionText, index, optionEventHandler, inputName}) => {
+  const letterOptions = ["A", "B", "C", "D", "E", "F"];
 
   const handleClick = () => {
     optionEventHandler(optionText);
@@ -10,8 +11,11 @@ const Option = ({optionText, index, optionEventHandler}) => {
 
   return (
     <OptionContainer onClick={handleClick}>
-      <span>{letterOptions[index]}</span>
-      <p>{optionText}</p>
+      <input type="radio" name={inputName} value={optionText} id={optionText}/>
+      <label htmlFor={optionText}>
+        <span>{letterOptions[index]}</span>
+        <p>{optionText}</p>
+      </label>
     </OptionContainer>
   )
 }

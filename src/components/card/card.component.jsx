@@ -3,10 +3,12 @@ import { ReactComponent as Logo } from '../../assets/adventure.svg';
 import { CardBody, CardButton, CardContainer, CardFooter, CardHeader } from './card.styles';
 import { useState } from 'react';
 
-const Card = ({logo, bodyTitle, options, eventHandler}) => {
+const Card = ({logo, bodyTitle, options, eventHandler, inputName}) => {
   const [optionSelected, setOptionSelected] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const handleOptionClick = optionValue => {
+    setIsDisabled(false);
     setOptionSelected(optionValue);
   }
 
@@ -19,10 +21,15 @@ const Card = ({logo, bodyTitle, options, eventHandler}) => {
       <CardBody>
         <h2>{bodyTitle}</h2>
         {options.map((option, index) => (
-          <Option optionText={option} index={index} key={index} optionEventHandler={handleOptionClick}/>
-        ))}
+          <Option 
+            optionText={option} 
+            index={index} 
+            key={index} 
+            optionEventHandler={handleOptionClick} 
+            inputName={inputName}/>
+          ))}
         <CardFooter>
-          <CardButton onClick={() => eventHandler(optionSelected)}>Next</CardButton>
+          <CardButton onClick={() => eventHandler(optionSelected)} disabled={isDisabled}>Next</CardButton>
         </CardFooter>
       </CardBody>
     </CardContainer>

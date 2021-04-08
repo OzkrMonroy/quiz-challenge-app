@@ -70,4 +70,9 @@ export const CardButton = styled.button`
   padding: 1rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
+
+  &:disabled {
+    background-color: gray;
+    cursor: unset;
+  }
 `

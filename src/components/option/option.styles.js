@@ -1,30 +1,47 @@
 import styled from "@emotion/styled";
 
 export const OptionContainer = styled.div`
-  display: flex;
-  border-radius: .75rem;
-  border: 2px solid rgba(96, 102, 208, 0.7);
+  overflow: hidden;
   color: rgba(96, 102, 208, 0.8);
-  transition: all .2s ease;
   margin-bottom: 2rem;
+  position: relative;
 
-  & span {
-    display: block;
-    width: 20%;
+  & input {
+    visibility: hidden;
+    appearance: none;
+    position: absolute;
+  }
+
+  & label {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-  }
-  & p {
-    width: 80%;
+    width: 100%;
     font-size: 1.2rem;
+    border: 2px solid rgba(96, 102, 208, 0.7);
+    border-radius: .75rem;
+    transition: all .2s ease;
+
+    & span {
+      display: block;
+      width: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+    }
+    & p {
+      width: 80%;
+    }
   }
 
-  &:hover {
+  &:hover label{
     background-color: #F9A826;
     border-color: #F9A826;
     color: #fff;
     cursor: pointer;
+  }
+  & input:checked + label{
+    background-color: #F9A826;
+    border-color: #F9A826;
+    color: #fff;
   }
 `
