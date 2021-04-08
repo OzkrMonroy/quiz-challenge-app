@@ -1,8 +1,10 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import './App.css';
-import Card from './components/card/card.component';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import axios from 'axios';
 import { AppContainer } from './styledComponents/app-container';
+import Home from './components/pages/home/home.component';
+import QuizState from './context/quiz/quizState';
+import SelectRegion from './components/pages/select-region/select-region.component';
 
 function App() {
   const [allCountries, setAllCountries] = useState(null);
@@ -41,9 +43,16 @@ function App() {
   }, [])
 
   return (
-    <AppContainer>
-      <Card/>
-    </AppContainer>
+    <QuizState>
+      <Router>
+        <AppContainer>
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/select-region" component={SelectRegion}/>
+          </Switch>
+        </AppContainer>
+      </Router>
+    </QuizState>
   );
 }
 
