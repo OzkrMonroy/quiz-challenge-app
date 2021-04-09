@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { OptionContainer } from "./option.styles";
 
 const Option = ({optionText, index, optionEventHandler, inputName}) => {

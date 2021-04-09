@@ -10,7 +10,6 @@ const Home = ({history}) => {
 
   const handleSetTypeOfQuiz = quizType => {
     setTypeOfQuiz(quizType);
-    console.log(quizType);
     history.push('/select-region');
   }
 
