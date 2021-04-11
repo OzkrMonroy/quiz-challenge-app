@@ -23,5 +23,4 @@ const Home = ({history}) => {
     />
   )
 }
-// Kuala Lumpur is the capital of
 export default Home;

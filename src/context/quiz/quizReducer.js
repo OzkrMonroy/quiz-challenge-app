@@ -16,7 +16,7 @@ const quizReducer = (state, action) => {
       return {
         ...state,
         allCountriesData: null,
-        allQuestions: null,
+        question: null,
         loading: true,
         error: false,
         isReady: false,
@@ -26,7 +26,7 @@ const quizReducer = (state, action) => {
       return {
         ...state,
         allCountriesData: action.payload.countriesData,
-        allQuestions: action.payload.questions,
+        question: action.payload.question,
         loading: false,
         error: false,
         isReady: true
@@ -35,10 +35,39 @@ const quizReducer = (state, action) => {
       return {
         ...state,
         allCountriesData: null,
-        allQuestions: null,
+        question: null,
         loading: false,
         error: true,
         isReady: false
+      }
+    case quizTypes.CHECK_ANSWER_INIT:
+      return {
+        ...state,
+        question: null,
+      }
+    case quizTypes.CHECK_ANSWER_SUCCESS:
+      return {
+        ...state,
+        question: action.payload,
+        score: state.score + 1,
+        totalAskedQuestions: state.totalAskedQuestions + 1
+      }
+    case quizTypes.CHECK_ANSWER_ERROR:
+      return {
+        ...state,
+        question: action.payload,
+        score: state.score - 1,
+        totalAskedQuestions: state.totalAskedQuestions + 1
+      }
+    case quizTypes.RESET_QUIZ_STATE:
+      return {
+        ...state,
+        typeOfQuiz: null,
+        region: null,
+        allCountriesData: null,
+        question: null,
+        score: 0,
+        totalAskedQuestions: 0
       }
     default:
       return state

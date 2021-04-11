@@ -2,45 +2,40 @@ import { useContext, useEffect, useState } from "react"
 import QuizContext from "../../../context/quiz/quizContext"
 import Card from "../../card/card.component"
 
-const QuestionPage = ({match, history}) => {
+const QuestionPage = ({history}) => {
   const quizContext = useContext(QuizContext);
-  const { allQuestions } = quizContext;
-  const [questionData, setQuestionData] = useState(null)
-  const [isLoading, setIsLoading] = useState(true);
+  const { question, checkAnswer, score, totalAskedQuestions, totalQuestions } = quizContext;
+  const [questionsAsked, setQuestionsAsked] = useState(1);
 
   useEffect(() => {
-    const { questionNumber } = match.params
-    const index = parseInt(questionNumber) -1;
-    if(allQuestions){
-      const question = allQuestions[index];
-      setQuestionData(question)
-      setIsLoading(false);
-    }
-  }, [allQuestions, match.params])
+    setQuestionsAsked(totalAskedQuestions)
+  }, [totalAskedQuestions])
 
   const handleCheckAnswer = answerSelected => {
-    const { questionNumber } = match.params;
-    const nextPage = parseInt(questionNumber) + 1;
-    const { capital } = questionData.answerData
-    if (answerSelected === capital) {
-      history.push(`/question/${nextPage}`)
-    }else {
-      alert('Te equivocaste :(');
+    const { capital } = question
+    const isCorrect = answerSelected === capital;
+
+    checkAnswer(isCorrect);
+
+    if(questionsAsked === totalQuestions){
+      history.push('/results');
+      return;
     }
   }
 
   return (
     <>
-    { isLoading ? (
-      <p>Loading</p>
-      ) : (
+    {console.log(score, questionsAsked)}
+    { question ? (
       <Card
         logo={true}
-        bodyTitle={`What is the capital of ${questionData.answerData.name}`}
-        options={questionData.posibleAnswers}
-        inputName="capital"
+        bodyTitle={`What is the capital of ${question.name}`}
+        options={question.posibleAnswers}
+        inputName={question.name}
         eventHandler={handleCheckAnswer}
       />
+      ) : (
+        <p>Loading</p>
     )
     }
   </>

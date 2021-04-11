@@ -5,7 +5,6 @@ const Option = ({optionText, index, optionEventHandler, inputName}) => {
 
   const handleClick = () => {
     optionEventHandler(optionText);
-    console.log(optionText);
   }
 
   return (

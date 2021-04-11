@@ -6,7 +6,7 @@ const SelectRegion = ({history}) => {
   const title = "Select the region";
   const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
   const quizContext = useContext(QuizContext);
-  const { createAllQuestionsQuiz, isReady } = quizContext;
+  const { createAllQuestionsQuiz } = quizContext;
 
   const handleSelectionRegion = async region => {
     console.log(region);

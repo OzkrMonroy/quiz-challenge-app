@@ -4,6 +4,7 @@ import Home from './components/pages/home/home.component';
 import QuizState from './context/quiz/quizState';
 import SelectRegion from './components/pages/select-region/select-region.component';
 import QuestionPage from './components/pages/question/question.component';
+import ResultsPage from './components/pages/results/results.component';
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route exact path="/select-region" component={SelectRegion}/>
-            <Route exact path="/question/:questionNumber" component={QuestionPage}/>
+            <Route exact path="/question" component={QuestionPage}/>
+            <Route exact path="/results" component={ResultsPage}/>
           </Switch>
         </AppContainer>
       </Router>

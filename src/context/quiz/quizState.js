@@ -11,10 +11,13 @@ const QuizState = (props) => {
 		typeOfQuiz: null,
     region: null,
 		allCountriesData: null,
-		allQuestions: null,
+		question: null,
     loading: false,
     error: false,
-    isReady: false
+    isReady: false,
+    score: 0,
+    totalQuestions: 5,
+    totalAskedQuestions: 1,
 	};
 
   const [state, dispatch] = useReducer(quizReducer, initialState);
@@ -28,41 +31,21 @@ const QuizState = (props) => {
 
   const createAllQuestionsQuiz = async (region, history) => {
     dispatch({
-      type: quizTypes.GET_QUIZ_QUESTIONS,
+      type: quizTypes.GET_QUIZ_QUESTIONS_INIT,
       payload: region
     })
     try {
       const response = await axios(`https://restcountries.eu/rest/v2/region/${region}`);
       const fullData = await response.data;
 
-      const allQuestions = []
-
-      for (let i = 0; i < 20; i++) {
-        const answerAndQuestion = fullData[Math.floor(Math.random() * fullData.length)];
-        const { name, capital } = answerAndQuestion;
-        const posibleAnswers = [];
-        const question = [];
-
-        for (let i = 0; i < 3; i++) {
-          const answer = fullData[Math.floor(Math.random() * fullData.length)];
-          const randomCapital = answer.capital;
-          posibleAnswers.push(randomCapital)
-        }
-        posibleAnswers.push(capital)
-        const disorderPosibleAnswers = disorderArray(posibleAnswers);
-        const questionData = {answerData : { name, capital}, posibleAnswers: disorderPosibleAnswers}
-        question.push(questionData)
-        allQuestions.push(questionData)
-      }
-      console.log(fullData);
-      console.log(allQuestions);
+      const question = createOneQuestion(fullData);
       dispatch({
         type: quizTypes.GET_QUIZ_QUESTIONS_SUCCESS,
         payload: {
-          countriesData: fullData, questions: allQuestions
+          countriesData: fullData, question
         }
       })
-      history.push('/question/1')
+      history.push('/question');
     } catch (error) {
       console.log(error);
       dispatch({
@@ -71,14 +54,70 @@ const QuizState = (props) => {
     }
   }
 
+  const checkAnswer = isCorrect => {
+    dispatch({
+      type: quizTypes.CHECK_ANSWER_INIT
+    })
+    const fullData = state.allCountriesData;
+    const question = createOneQuestion(fullData);
+    if(isCorrect){
+      setTimeout(() => {
+        dispatch({
+          type: quizTypes.CHECK_ANSWER_SUCCESS,
+          payload: question
+        })
+        console.log(question);
+      }, 200);
+    }else {
+      setTimeout(() => {
+        dispatch({
+          type: quizTypes.CHECK_ANSWER_ERROR,
+          payload: question
+        })
+      }, 200);
+    }
+  }
+
+  const endGame = () => {
+    dispatch({
+      type: quizTypes.RESET_QUIZ_STATE
+    })
+  }
+
+
+  const createOneQuestion = fullData => {
+    const answerAndQuestion = fullData[Math.floor(Math.random() * fullData.length)];
+      const { name, capital } = answerAndQuestion;
+      const posibleAnswers = [];
+      let question = {};
+
+      for (let i = 0; i < 3; i++) {
+        const answer = fullData[Math.floor(Math.random() * fullData.length)];
+        const randomCapital = answer.capital;
+        posibleAnswers.push(randomCapital)
+      }
+      posibleAnswers.push(capital)
+      const disorderPosibleAnswers = disorderArray(posibleAnswers);
+      question = { name, capital, posibleAnswers: disorderPosibleAnswers}
+
+      console.log(question);
+
+      return question
+  }
+
 	return (
     <QuizContext.Provider value={{
       typeOfQuiz: state.typeOfQuiz,
       countriesAllData: state.countriesAllData,
-      allQuestions: state.allQuestions,
+      question: state.question,
       isReady: state.isReady,
+      score: state.score,
+      totalAskedQuestions: state.totalAskedQuestions,
+      totalQuestions: state.totalQuestions,
       setTypeOfQuiz,
-      createAllQuestionsQuiz
+      createAllQuestionsQuiz,
+      checkAnswer,
+      endGame
     }}>
       {props.children}
     </QuizContext.Provider>
