@@ -9,7 +9,6 @@ const SelectRegion = ({history}) => {
   const { createAllQuestionsQuiz } = quizContext;
 
   const handleSelectionRegion = async region => {
-    console.log(region);
     await createAllQuestionsQuiz(region, history);
   }
 

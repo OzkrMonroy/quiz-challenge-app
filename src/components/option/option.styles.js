@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const OptionContainer = styled.div`
   overflow: hidden;
-  color: rgba(96, 102, 208, 0.8);
+  color: #6066d0b3;
   margin-bottom: 2rem;
   position: relative;
 
@@ -16,9 +16,11 @@ export const OptionContainer = styled.div`
     display: flex;
     width: 100%;
     font-size: 1.2rem;
-    border: 2px solid rgba(96, 102, 208, 0.7);
+    border: 2px solid ${props => props.isChecking && props.isCorrect ? props.optionColor : '#6066d0b3'};
     border-radius: .75rem;
     transition: all .2s ease;
+    background-color: ${props => props.isChecking && props.isCorrect ? props.optionColor : '#fff'};
+    color: ${props => props.isChecking && props.isCorrect ? '#fff' : '#6066d0b3'};
 
     & span {
       display: block;
@@ -40,8 +42,11 @@ export const OptionContainer = styled.div`
     cursor: pointer;
   }
   & input:checked + label{
-    background-color: #F9A826;
-    border-color: #F9A826;
+    background-color: ${props => props.optionColor};
+    border-color: ${props => props.optionColor};
     color: #fff;
   }
 `
+// background: #EA8282;
+// background: #60BF88;
+// #6066d0b3

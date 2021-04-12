@@ -40,10 +40,21 @@ const quizReducer = (state, action) => {
         error: true,
         isReady: false
       }
+    case quizTypes.SELECT_ANSWER:
+      return {
+        ...state,
+        selectedAnswer: action.payload
+      }
     case quizTypes.CHECK_ANSWER_INIT:
       return {
         ...state,
+        isChecking: true
+      }
+    case quizTypes.CREATE_NEW_QUESTION:
+      return {
+        ...state,
         question: null,
+        isChecking: false
       }
     case quizTypes.CHECK_ANSWER_SUCCESS:
       return {
@@ -67,7 +78,7 @@ const quizReducer = (state, action) => {
         allCountriesData: null,
         question: null,
         score: 0,
-        totalAskedQuestions: 0
+        totalAskedQuestions: 1
       }
     default:
       return state

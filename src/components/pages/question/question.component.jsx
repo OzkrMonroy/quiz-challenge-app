@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import QuizContext from "../../../context/quiz/quizContext"
 import Card from "../../card/card.component"
+import Spinner from "../../spinner/spinner";
 
 const QuestionPage = ({history}) => {
   const quizContext = useContext(QuizContext);
-  const { question, checkAnswer, score, totalAskedQuestions, totalQuestions } = quizContext;
+  const { question, checkAnswer, totalAskedQuestions, totalQuestions } = quizContext;
   const [questionsAsked, setQuestionsAsked] = useState(1);
 
   useEffect(() => {
@@ -18,24 +19,25 @@ const QuestionPage = ({history}) => {
     checkAnswer(isCorrect);
 
     if(questionsAsked === totalQuestions){
-      history.push('/results');
+      setTimeout(() => {
+        history.push('/results');
+      }, 1900);
       return;
     }
   }
 
   return (
     <>
-    {console.log(score, questionsAsked)}
     { question ? (
       <Card
         logo={true}
-        bodyTitle={`What is the capital of ${question.name}`}
+        bodyTitle={`What is the capital of ${question.name}?`}
         options={question.posibleAnswers}
         inputName={question.name}
         eventHandler={handleCheckAnswer}
       />
       ) : (
-        <p>Loading</p>
+        <Spinner/>
     )
     }
   </>

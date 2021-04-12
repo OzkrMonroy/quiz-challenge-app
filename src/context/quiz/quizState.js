@@ -18,6 +18,8 @@ const QuizState = (props) => {
     score: 0,
     totalQuestions: 5,
     totalAskedQuestions: 1,
+    selectedAnswer: null,
+    isChecking: false
 	};
 
   const [state, dispatch] = useReducer(quizReducer, initialState);
@@ -54,28 +56,39 @@ const QuizState = (props) => {
     }
   }
 
+  const selectAnswerToCheck = answer => {
+    dispatch({
+      type: quizTypes.SELECT_ANSWER,
+      payload: answer
+    })
+  }
+
   const checkAnswer = isCorrect => {
+    const fullData = state.allCountriesData;
+    const question = createOneQuestion(fullData);
     dispatch({
       type: quizTypes.CHECK_ANSWER_INIT
     })
-    const fullData = state.allCountriesData;
-    const question = createOneQuestion(fullData);
-    if(isCorrect){
-      setTimeout(() => {
-        dispatch({
-          type: quizTypes.CHECK_ANSWER_SUCCESS,
-          payload: question
-        })
-        console.log(question);
-      }, 200);
-    }else {
-      setTimeout(() => {
-        dispatch({
-          type: quizTypes.CHECK_ANSWER_ERROR,
-          payload: question
-        })
-      }, 200);
-    }
+    setTimeout(() => {
+      dispatch({
+        type: quizTypes.CREATE_NEW_QUESTION
+      })
+      if(isCorrect){
+        setTimeout(() => {
+          dispatch({
+            type: quizTypes.CHECK_ANSWER_SUCCESS,
+            payload: question
+          })
+        }, 2000);
+      }else {
+        setTimeout(() => {
+          dispatch({
+            type: quizTypes.CHECK_ANSWER_ERROR,
+            payload: question
+          })
+        }, 2000);
+      }
+    }, 1000);
   }
 
   const endGame = () => {
@@ -100,8 +113,6 @@ const QuizState = (props) => {
       const disorderPosibleAnswers = disorderArray(posibleAnswers);
       question = { name, capital, posibleAnswers: disorderPosibleAnswers}
 
-      console.log(question);
-
       return question
   }
 
@@ -114,8 +125,11 @@ const QuizState = (props) => {
       score: state.score,
       totalAskedQuestions: state.totalAskedQuestions,
       totalQuestions: state.totalQuestions,
+      selectedAnswer: state.selectedAnswer,
+      isChecking: state.isChecking,
       setTypeOfQuiz,
       createAllQuestionsQuiz,
+      selectAnswerToCheck,
       checkAnswer,
       endGame
     }}>
