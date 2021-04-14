@@ -1,11 +1,11 @@
 import Option from '../option/option.component';
 import { ReactComponent as Logo } from '../../assets/adventure.svg';
-import { CardBody, CardButton, CardContainer, CardFooter, CardHeader } from './card.styles';
+import { CardBody, CardButton, CardContainer, CardFooter, CardHeader, CardQuestionContainer } from './card.styles';
 import { useState } from 'react';
 
-const Card = ({logo, bodyTitle, options, eventHandler, inputName}) => {
+const Card = ({logo, bodyTitle, options, eventHandler, inputName, showFlag, flagUrl}) => {
   const [optionSelected, setOptionSelected] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleOptionClick = optionValue => {
     setIsDisabled(false);
@@ -19,7 +19,10 @@ const Card = ({logo, bodyTitle, options, eventHandler, inputName}) => {
         {logo && (<Logo className="logo"/>)}
       </CardHeader>
       <CardBody>
-        <h2>{bodyTitle}</h2>
+        <CardQuestionContainer>
+          {showFlag && (<img src={flagUrl} alt="question flag"/>)}
+          <h2>{bodyTitle}</h2>
+        </CardQuestionContainer>
         {options.map((option, index) => (
           <Option 
             optionText={option} 

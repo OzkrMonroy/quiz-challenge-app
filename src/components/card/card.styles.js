@@ -48,6 +48,18 @@ export const CardBody = styled.div`
   background-color: #ffffff;
   border-radius: 1.5rem;
   padding: 3rem 1.5rem 2rem;;
+`
+export const CardQuestionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  & img {
+    display: block;
+    width: 195px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
 
   & h2 {
     color: #2F527B;
@@ -55,6 +67,7 @@ export const CardBody = styled.div`
     margin-bottom: 2rem;
   }
 `
+
 export const CardFooter = styled.div`
   display: flex;
   justify-content: flex-end;

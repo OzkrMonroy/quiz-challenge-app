@@ -19,7 +19,6 @@ const quizReducer = (state, action) => {
         question: null,
         loading: true,
         error: false,
-        isReady: false,
         region: action.payload
       }
     case quizTypes.GET_QUIZ_QUESTIONS_SUCCESS:
@@ -29,7 +28,6 @@ const quizReducer = (state, action) => {
         question: action.payload.question,
         loading: false,
         error: false,
-        isReady: true
       }
     case quizTypes.GET_QUIZ_QUESTIONS_ERROR: 
       return {
@@ -38,7 +36,6 @@ const quizReducer = (state, action) => {
         question: null,
         loading: false,
         error: true,
-        isReady: false
       }
     case quizTypes.SELECT_ANSWER:
       return {

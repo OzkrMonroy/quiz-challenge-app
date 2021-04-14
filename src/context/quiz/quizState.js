@@ -14,7 +14,6 @@ const QuizState = (props) => {
 		question: null,
     loading: false,
     error: false,
-    isReady: false,
     score: 0,
     totalQuestions: 5,
     totalAskedQuestions: 1,
@@ -40,7 +39,7 @@ const QuizState = (props) => {
       const response = await axios(`https://restcountries.eu/rest/v2/region/${region}`);
       const fullData = await response.data;
 
-      const question = createOneQuestion(fullData);
+      const question = crateOneQuestionByType(fullData);
       dispatch({
         type: quizTypes.GET_QUIZ_QUESTIONS_SUCCESS,
         payload: {
@@ -65,7 +64,7 @@ const QuizState = (props) => {
 
   const checkAnswer = isCorrect => {
     const fullData = state.allCountriesData;
-    const question = createOneQuestion(fullData);
+    const question = crateOneQuestionByType(fullData);
     dispatch({
       type: quizTypes.CHECK_ANSWER_INIT
     })
@@ -97,16 +96,20 @@ const QuizState = (props) => {
     })
   }
 
+  const crateOneQuestionByType = fullData => {
+    const quizType = state.typeOfQuiz.toLowerCase();
+    const countryOrFlag = quizType === 'capital' ? 'name' : 'flag';
+    const nameOrCapital = quizType === 'capital' ? 'capital' : 'name';
 
-  const createOneQuestion = fullData => {
     const answerAndQuestion = fullData[Math.floor(Math.random() * fullData.length)];
-      const { name, capital } = answerAndQuestion;
+      const name = answerAndQuestion[`${countryOrFlag}`];
+      const capital = answerAndQuestion[`${nameOrCapital}`];
       const posibleAnswers = [];
       let question = {};
 
       for (let i = 0; i < 3; i++) {
         const answer = fullData[Math.floor(Math.random() * fullData.length)];
-        const randomCapital = answer.capital;
+        const randomCapital = answer[`${nameOrCapital}`];
         posibleAnswers.push(randomCapital)
       }
       posibleAnswers.push(capital)
@@ -121,7 +124,6 @@ const QuizState = (props) => {
       typeOfQuiz: state.typeOfQuiz,
       countriesAllData: state.countriesAllData,
       question: state.question,
-      isReady: state.isReady,
       score: state.score,
       totalAskedQuestions: state.totalAskedQuestions,
       totalQuestions: state.totalQuestions,

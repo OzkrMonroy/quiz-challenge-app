@@ -5,12 +5,18 @@ import Spinner from "../../spinner/spinner";
 
 const QuestionPage = ({history}) => {
   const quizContext = useContext(QuizContext);
-  const { question, checkAnswer, totalAskedQuestions, totalQuestions } = quizContext;
+  const { question, checkAnswer, totalAskedQuestions, totalQuestions, typeOfQuiz } = quizContext;
   const [questionsAsked, setQuestionsAsked] = useState(1);
+  const [titleToShow, setTitleToShow] = useState('');
+  const showFlagIcon = typeOfQuiz === 'Flag';
 
   useEffect(() => {
     setQuestionsAsked(totalAskedQuestions)
-  }, [totalAskedQuestions])
+    if(question){
+      const title = typeOfQuiz === 'Flag' ? 'Which country does this flag belong to?  ' : `What is the capital of ${question.name}?`;
+      setTitleToShow(title)
+    }
+  }, [totalAskedQuestions, question, typeOfQuiz])
 
   const handleCheckAnswer = answerSelected => {
     const { capital } = question
@@ -31,10 +37,12 @@ const QuestionPage = ({history}) => {
     { question ? (
       <Card
         logo={true}
-        bodyTitle={`What is the capital of ${question.name}?`}
+        bodyTitle={titleToShow}
         options={question.posibleAnswers}
         inputName={question.name}
         eventHandler={handleCheckAnswer}
+        showFlag={showFlagIcon}
+        flagUrl={question.name}
       />
       ) : (
         <Spinner/>
