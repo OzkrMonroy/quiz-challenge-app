@@ -14,8 +14,8 @@ Demo: [QuizCountriesChallenge](https://countriesquiz.netlify.app/)
 
 ## Features
 * You can see at least 2 types of questions: a city is the capital of.. or a flag belong to country..
-* You can see select an answer.
-* You can see if my answer is correct or incorrect.
+* You can select an answer.
+* You can see if your answer is correct or incorrect.
 * When You answer correctly, You move on to the next question and your score increment plus one.
 * You can try again.
 
