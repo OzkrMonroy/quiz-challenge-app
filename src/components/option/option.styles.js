@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { ReactComponent as CorrectIcon } from '../../assets/correctAnswer.svg';
+import { ReactComponent as IncorrectIcon } from '../../assets/incorrectAnswer.svg'
 
 export const OptionContainer = styled.div`
   overflow: hidden;
@@ -19,19 +21,20 @@ export const OptionContainer = styled.div`
     border: 2px solid ${props => props.isChecking && props.isCorrect ? props.optionColor : '#6066d0b3'};
     border-radius: .75rem;
     transition: all .2s ease;
-    background-color: ${props => props.isChecking && props.isCorrect ? props.optionColor : '#fff'};
+    background-color: ${props => props.isChecking && props.isCorrect ? props.optionColor : ''};
     color: ${props => props.isChecking && props.isCorrect ? '#fff' : '#6066d0b3'};
+    position: relative;
 
     & span {
       display: block;
-      width: 20%;
+      width: 15%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 1.5rem;
     }
     & p {
-      width: 80%;
+      width: 70%;
     }
   }
 
@@ -47,6 +50,18 @@ export const OptionContainer = styled.div`
     color: #fff;
   }
 `
-// background: #EA8282;
-// background: #60BF88;
-// #6066d0b3
+export const IconContainer = styled.div`
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: ${props => props.isChecking ? 1 : 0};
+`
+export const CorrectAnswerIcon = styled(CorrectIcon)`
+  width: 35px;
+  height: 35px;
+`
+export const IncorrectAnswerIcon = styled(IncorrectIcon)`
+  width: 35px;
+  height: 35px;
+`

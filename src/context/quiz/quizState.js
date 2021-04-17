@@ -3,54 +3,43 @@ import axios from 'axios';
 import QuizContext from "./quizContext";
 import quizReducer from "./quizReducer";
 import quizTypes from "./quizTypes";
-import disorderArray from "../../utils/disorderArray";
+import { questionRoute } from "../../utils/routes";
+import initialState from "../../utils/initialState";
+import createOneQuestionByType from "../../utils/createOneQuestionByType";
 
 const QuizState = (props) => {
-
-	const initialState = {
-		typeOfQuiz: null,
-    region: null,
-		allCountriesData: null,
-		question: null,
-    loading: false,
-    error: false,
-    score: 0,
-    totalQuestions: 5,
-    totalAskedQuestions: 1,
-    selectedAnswer: null,
-    isChecking: false
-	};
 
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
   const setTypeOfQuiz = typeOfQuiz => {
     dispatch({
-      type: quizTypes.SET_QUIZ_TYPE,
+      type: quizTypes.SET_TYPE_OF_QUIZ,
       payload: typeOfQuiz
     })
   }
 
-  const createAllQuestionsQuiz = async (region, history) => {
+  const createFirstQuestion = async (region, history) => {
     dispatch({
-      type: quizTypes.GET_QUIZ_QUESTIONS_INIT,
+      type: quizTypes.CREATE_FIRST_QUESTION_INIT,
       payload: region
     })
     try {
       const response = await axios(`https://restcountries.eu/rest/v2/region/${region}`);
-      const fullData = await response.data;
+      const coutriesData = await response.data;
+      const typeOfQuiz = state.typeOfQuiz
 
-      const question = crateOneQuestionByType(fullData);
+      const question = createOneQuestionByType(coutriesData, typeOfQuiz);
       dispatch({
-        type: quizTypes.GET_QUIZ_QUESTIONS_SUCCESS,
+        type: quizTypes.CREATE_FIRST_QUESTION_SUCCESS,
         payload: {
-          countriesData: fullData, question
+          countriesData: coutriesData, question
         }
       })
-      history.push('/question');
+      history.push(`${questionRoute}`);
     } catch (error) {
       console.log(error);
       dispatch({
-        type: quizTypes.GET_QUIZ_QUESTIONS_ERROR
+        type: quizTypes.CREATE_FIRST_QUESTION_ERROR
       })
     }
   }
@@ -63,30 +52,27 @@ const QuizState = (props) => {
   }
 
   const checkAnswer = isCorrect => {
-    const fullData = state.allCountriesData;
-    const question = crateOneQuestionByType(fullData);
+    const coutnriesData = state.allCountriesData;
+    const typeOfQuiz = state.typeOfQuiz
+    const question = createOneQuestionByType(coutnriesData, typeOfQuiz);
     dispatch({
-      type: quizTypes.CHECK_ANSWER_INIT
+      type: quizTypes.SET_IS_CHECKING_ANSWER
     })
+    if(isCorrect) {
+      dispatch({
+        type: quizTypes.INCREMENT_SCORE
+      })
+    }
     setTimeout(() => {
       dispatch({
-        type: quizTypes.CREATE_NEW_QUESTION
+        type: quizTypes.CREATE_NEW_QUESTION_INIT
       })
-      if(isCorrect){
         setTimeout(() => {
           dispatch({
-            type: quizTypes.CHECK_ANSWER_SUCCESS,
+            type: quizTypes.CREATE_NEW_QUESTION_SUCCESS,
             payload: question
           })
         }, 2000);
-      }else {
-        setTimeout(() => {
-          dispatch({
-            type: quizTypes.CHECK_ANSWER_ERROR,
-            payload: question
-          })
-        }, 2000);
-      }
     }, 1000);
   }
 
@@ -96,41 +82,18 @@ const QuizState = (props) => {
     })
   }
 
-  const crateOneQuestionByType = fullData => {
-    const quizType = state.typeOfQuiz.toLowerCase();
-    const countryOrFlag = quizType === 'capital' ? 'name' : 'flag';
-    const nameOrCapital = quizType === 'capital' ? 'capital' : 'name';
-
-    const answerAndQuestion = fullData[Math.floor(Math.random() * fullData.length)];
-      const name = answerAndQuestion[`${countryOrFlag}`];
-      const capital = answerAndQuestion[`${nameOrCapital}`];
-      const posibleAnswers = [];
-      let question = {};
-
-      for (let i = 0; i < 3; i++) {
-        const answer = fullData[Math.floor(Math.random() * fullData.length)];
-        const randomCapital = answer[`${nameOrCapital}`];
-        posibleAnswers.push(randomCapital)
-      }
-      posibleAnswers.push(capital)
-      const disorderPosibleAnswers = disorderArray(posibleAnswers);
-      question = { name, capital, posibleAnswers: disorderPosibleAnswers}
-
-      return question
-  }
-
 	return (
     <QuizContext.Provider value={{
       typeOfQuiz: state.typeOfQuiz,
       countriesAllData: state.countriesAllData,
       question: state.question,
       score: state.score,
-      totalAskedQuestions: state.totalAskedQuestions,
+      totalQuestionsAsked: state.totalQuestionsAsked,
       totalQuestions: state.totalQuestions,
       selectedAnswer: state.selectedAnswer,
       isChecking: state.isChecking,
       setTypeOfQuiz,
-      createAllQuestionsQuiz,
+      createFirstQuestion,
       selectAnswerToCheck,
       checkAnswer,
       endGame

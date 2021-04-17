@@ -1,13 +1,23 @@
 import styled from '@emotion/styled';
-import { ReactComponent as Logo } from '../../../assets/winners.svg';
+import { ReactComponent as WinnerLogo } from '../../assets/winners.svg';
+import { ReactComponent as LoserLogo } from '../../assets/lowScoreIcon.svg';
+import { css } from '@emotion/react';
 
-export const LogoComponent = styled(Logo)`
+const logoStyle = css`
   width: 250px;
   height: 250px;
   margin: 0 auto;
   display: block;
   margin-top: -4rem;
 `
+
+export const HighScoreLogo = styled(WinnerLogo)`
+  ${logoStyle}
+`
+export const LowScoreLogo = styled(LoserLogo)`
+  ${logoStyle}
+`
+
 export const ResultTitle = styled.p`
   text-align: center;
   font-size: 3rem;

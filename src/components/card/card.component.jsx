@@ -1,11 +1,13 @@
 import Option from '../option/option.component';
-import { ReactComponent as Logo } from '../../assets/adventure.svg';
-import { CardBody, CardButton, CardContainer, CardFooter, CardHeader, CardQuestionContainer } from './card.styles';
-import { useState } from 'react';
+import { CardBody, CardButton, CardContainer, CardCounter, CardFooter, CardHeader, CardLogo, CardQuestionContainer } from './card.styles';
+import { useContext, useState } from 'react';
+import QuizContext from '../../context/quiz/quizContext';
 
-const Card = ({logo, bodyTitle, options, eventHandler, inputName, showFlag, flagUrl}) => {
+const Card = ({bodyTitle, options, eventHandler, inputName, showFlag, flagUrl }) => {
   const [optionSelected, setOptionSelected] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const quizContext = useContext(QuizContext);
+  const { question, totalQuestionsAsked, totalQuestions } = quizContext;
 
   const handleOptionClick = optionValue => {
     setIsDisabled(false);
@@ -16,11 +18,11 @@ const Card = ({logo, bodyTitle, options, eventHandler, inputName, showFlag, flag
     <CardContainer>
       <CardHeader>
         <h1>Country quiz</h1>
-        {logo && (<Logo className="logo"/>)}
+        <CardLogo/>
       </CardHeader>
       <CardBody>
         <CardQuestionContainer>
-          {showFlag && (<img src={flagUrl} alt="question flag"/>)}
+          {showFlag && (<img src={flagUrl} alt={`${inputName} flag`}/>)}
           <h2>{bodyTitle}</h2>
         </CardQuestionContainer>
         {options.map((option, index) => (
@@ -31,6 +33,7 @@ const Card = ({logo, bodyTitle, options, eventHandler, inputName, showFlag, flag
             optionEventHandler={handleOptionClick} 
             inputName={inputName}/>
           ))}
+        {question && <CardCounter>{totalQuestionsAsked}/{totalQuestions}</CardCounter>}
         <CardFooter>
           <CardButton onClick={() => eventHandler(optionSelected)} disabled={isDisabled}>Next</CardButton>
         </CardFooter>

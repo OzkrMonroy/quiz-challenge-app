@@ -1,22 +1,22 @@
 import { useContext } from "react";
-import QuizContext from "../../../context/quiz/quizContext";
-import Card from "../../card/card.component";
+import QuizContext from "../../context/quiz/quizContext";
+import { optionsQuiz } from "../../utils/optionsArray";
+import { selectRegionRoute } from "../../utils/routes";
+import { homeTitle } from "../../utils/strings";
+import Card from "../../components/card/card.component";
 
 const Home = ({history}) => {
-  const optionsQuiz = ["Capital", "Flag"];
-  const title = "What kind of quiz do you want to play?"
   const quizContext = useContext(QuizContext);
   const { setTypeOfQuiz } = quizContext;
 
   const handleSetTypeOfQuiz = quizType => {
     setTypeOfQuiz(quizType);
-    history.push('/select-region');
+    history.push(`${selectRegionRoute}`);
   }
 
   return (
     <Card
-      logo={true}
-      bodyTitle={title}
+      bodyTitle={homeTitle}
       options={optionsQuiz}
       eventHandler={handleSetTypeOfQuiz}
       inputName="quizType"

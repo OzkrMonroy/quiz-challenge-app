@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import device from '../../utils/cssBreakpoints';
+import { ReactComponent as Logo } from '../../assets/adventure.svg';
 
 export const CardContainer = styled.div`
   width: 95%;
@@ -7,6 +8,7 @@ export const CardContainer = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: 4rem;
 
   @media ${device.mobileL} {
     width: 55%;
@@ -27,23 +29,23 @@ export const CardHeader = styled.div`
     color: #fff;
     text-transform: uppercase;
   }
-  & .logo {
-    position: absolute;
-    height: 110px;
-    width: 110px;
-    top: 50%;
-    right: 5%;
+`
 
-    @media ${device.tablet}{
-      height: 150px;
-      width: 150px;
-      right: 10%;
-      top:0;
-    }
-    @media ${device.laptop}{
-    }
+export const CardLogo = styled(Logo)`
+  position: absolute;
+  height: 110px;
+  width: 110px;
+  top: 50%;
+  right: 5%;
+
+  @media ${device.tablet}{
+    height: 150px;
+    width: 150px;
+    right: 10%;
+    top:0;
   }
 `
+
 export const CardBody = styled.div`
   background-color: #ffffff;
   border-radius: 1.5rem;
@@ -87,5 +89,11 @@ export const CardButton = styled.button`
   &:disabled {
     background-color: gray;
     cursor: unset;
+    box-shadow: 0px 2px 4px rgba(128, 128, 128, 0.4);
   }
+`
+export const CardCounter = styled.p`
+  color: #2F527B;
+  text-align: center;
+  font-weight: 700;
 `

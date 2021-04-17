@@ -1,12 +1,11 @@
-import { CardBody, CardContainer, CardHeader } from '../card/card.styles';
-import { ReactComponent as Logo } from '../../assets/adventure.svg';
+import { CardBody, CardContainer, CardHeader, CardLogo } from '../card/card.styles';
 import './spinner.css';
 
 const Spinner = () => (
   <CardContainer>
     <CardHeader>
       <h1>Country quiz</h1>
-      <Logo className="logo"/>
+      <CardLogo/>
     </CardHeader>
     <CardBody>
       <div className="sk-folding-cube">

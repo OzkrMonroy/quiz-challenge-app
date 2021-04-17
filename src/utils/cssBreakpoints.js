@@ -4,6 +4,7 @@ const sizes = {
   mobileL: '425px',
   tablet: '768px',
   laptop: '1024px',
+  ipadPro: '1366px',
   laptopL: '1440px',
   desktop: '2560px'
 }
@@ -17,7 +18,9 @@ const device = {
   laptopL: `(min-width: ${sizes.laptopL})`,
   desktop: `(min-width: ${sizes.desktop})`,
   desktopL: `(min-width: ${sizes.desktop})`,
-  landscapeMobile: `(max-height: ${sizes.mobileL})`
+  landscapeMobile: `(max-height: ${sizes.mobileL})`,
+  ipadPro: `(min-height: ${sizes.ipadPro})`,
+  ipadPropLandscape: `(min-width: ${sizes.ipadPro})`
 };
 
 export default device

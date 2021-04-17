@@ -1,40 +1,33 @@
+import initialState from "../../utils/initialState";
 import quizTypes from "./quizTypes";
 
 const quizReducer = (state, action) => {
   switch (action.type) {
-    case quizTypes.SET_QUIZ_TYPE:
+    case quizTypes.SET_TYPE_OF_QUIZ:
       return {
         ...state,
         typeOfQuiz: action.payload
       }
-    case quizTypes.SET_REGION:
-      return {
-        ...state,
-        region: action.payload
-      }
-    case quizTypes.GET_QUIZ_QUESTIONS_INIT:
+    case quizTypes.CREATE_FIRST_QUESTION_INIT:
       return {
         ...state,
         allCountriesData: null,
         question: null,
-        loading: true,
         error: false,
         region: action.payload
       }
-    case quizTypes.GET_QUIZ_QUESTIONS_SUCCESS:
+    case quizTypes.CREATE_FIRST_QUESTION_SUCCESS:
       return {
         ...state,
         allCountriesData: action.payload.countriesData,
         question: action.payload.question,
-        loading: false,
         error: false,
       }
-    case quizTypes.GET_QUIZ_QUESTIONS_ERROR: 
+    case quizTypes.CREATE_FIRST_QUESTION_ERROR: 
       return {
         ...state,
         allCountriesData: null,
         question: null,
-        loading: false,
         error: true,
       }
     case quizTypes.SELECT_ANSWER:
@@ -42,41 +35,30 @@ const quizReducer = (state, action) => {
         ...state,
         selectedAnswer: action.payload
       }
-    case quizTypes.CHECK_ANSWER_INIT:
+    case quizTypes.SET_IS_CHECKING_ANSWER:
       return {
         ...state,
         isChecking: true
       }
-    case quizTypes.CREATE_NEW_QUESTION:
+    case quizTypes.INCREMENT_SCORE: 
+      return {
+        ...state,
+        score: state.score + 1,
+      }
+    case quizTypes.CREATE_NEW_QUESTION_INIT:
       return {
         ...state,
         question: null,
         isChecking: false
       }
-    case quizTypes.CHECK_ANSWER_SUCCESS:
+    case quizTypes.CREATE_NEW_QUESTION_SUCCESS:
       return {
         ...state,
         question: action.payload,
-        score: state.score + 1,
-        totalAskedQuestions: state.totalAskedQuestions + 1
-      }
-    case quizTypes.CHECK_ANSWER_ERROR:
-      return {
-        ...state,
-        question: action.payload,
-        score: state.score - 1,
-        totalAskedQuestions: state.totalAskedQuestions + 1
+        totalQuestionsAsked: state.totalQuestionsAsked + 1
       }
     case quizTypes.RESET_QUIZ_STATE:
-      return {
-        ...state,
-        typeOfQuiz: null,
-        region: null,
-        allCountriesData: null,
-        question: null,
-        score: 0,
-        totalAskedQuestions: 1
-      }
+      return initialState
     default:
       return state
   }

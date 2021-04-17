@@ -1,25 +1,26 @@
 import { useContext, useState, useEffect } from "react";
 import QuizContext from "../../context/quiz/quizContext";
-import { OptionContainer } from "./option.styles";
+import { correctColor, defaultColor, incorrectColor } from "../../utils/colors";
+import { letterOptions } from "../../utils/optionsArray";
+import { CorrectAnswerIcon, IconContainer, IncorrectAnswerIcon, OptionContainer } from "./option.styles";
 
 const Option = ({optionText, index, optionEventHandler, inputName}) => {
-  const letterOptions = ["A", "B", "C", "D", "E", "F"];
   const quizContext = useContext(QuizContext);
   const { question, selectAnswerToCheck, selectedAnswer, isChecking } = quizContext;
-  const [optionColor, setOptionColor] = useState('#F9A826');
+  const [optionColor, setOptionColor] = useState(defaultColor);
   const [isCorrect, setIsCorrect] = useState(null);
 
   useEffect(() => {
     if(question){
-      const correct = optionText === question.capital;
+      const correct = optionText === question.answer;
       let optionIsSelected = selectedAnswer === optionText;
       if (isChecking) {
         if(!correct && optionIsSelected){
-          setOptionColor('#EA8282');
+          setOptionColor(incorrectColor);
         }else if(correct && optionIsSelected){
-          setOptionColor('#60BF88');
+          setOptionColor(correctColor);
         }else if(correct && !optionIsSelected){
-          setOptionColor('#60BF88');
+          setOptionColor(correctColor);
         }
       }
       setIsCorrect(correct);
@@ -32,7 +33,12 @@ const Option = ({optionText, index, optionEventHandler, inputName}) => {
   }
 
   return (
-    <OptionContainer onChange={handleOnChange} optionColor={optionColor} isChecking={isChecking} isCorrect={isCorrect}>
+    <OptionContainer 
+      onChange={handleOnChange} 
+      optionColor={optionColor} 
+      isChecking={isChecking} 
+      isCorrect={isCorrect}
+    >
       <input 
         type="radio" 
         name={inputName} 
@@ -42,6 +48,9 @@ const Option = ({optionText, index, optionEventHandler, inputName}) => {
       <label htmlFor={optionText}>
         <span>{letterOptions[index]}</span>
         <p>{optionText}</p>
+        <IconContainer isChecking={isChecking}>
+          {isCorrect ? <CorrectAnswerIcon/> : <IncorrectAnswerIcon/>}
+        </IconContainer>
       </label>
     </OptionContainer>
   )
