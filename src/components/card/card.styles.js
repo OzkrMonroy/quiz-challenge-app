@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import device from '../../utils/cssBreakpoints';
 import { ReactComponent as Logo } from '../../assets/adventure.svg';
+import { incorrectColor } from '../../utils/colors';
 
 export const CardContainer = styled.div`
   width: 95%;
@@ -95,5 +96,13 @@ export const CardButton = styled.button`
 export const CardCounter = styled.p`
   color: #2F527B;
   text-align: center;
+  font-weight: 700;
+`
+
+export const CardErrorContainer = styled.p`
+  color: ${incorrectColor};
+  border: 2px solid ${incorrectColor};
+  text-align: center;
+  padding: 1rem;
   font-weight: 700;
 `

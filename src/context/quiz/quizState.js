@@ -52,17 +52,26 @@ const QuizState = (props) => {
   }
 
   const checkAnswer = isCorrect => {
-    const coutnriesData = state.allCountriesData;
-    const typeOfQuiz = state.typeOfQuiz
-    const question = createOneQuestionByType(coutnriesData, typeOfQuiz);
     dispatch({
       type: quizTypes.SET_IS_CHECKING_ANSWER
     })
     if(isCorrect) {
-      dispatch({
-        type: quizTypes.INCREMENT_SCORE
-      })
+      incrementScore();
     }
+    createNextQuestion()
+  }
+
+  const incrementScore = () =>{
+    dispatch({
+      type: quizTypes.INCREMENT_SCORE
+    });
+  }
+
+  const createNextQuestion = () => {
+    const coutnriesData = state.allCountriesData;
+    const typeOfQuiz = state.typeOfQuiz
+    const question = createOneQuestionByType(coutnriesData, typeOfQuiz);
+
     setTimeout(() => {
       dispatch({
         type: quizTypes.CREATE_NEW_QUESTION_INIT
@@ -88,6 +97,7 @@ const QuizState = (props) => {
       countriesAllData: state.countriesAllData,
       question: state.question,
       score: state.score,
+      error: state.error,
       totalQuestionsAsked: state.totalQuestionsAsked,
       totalQuestions: state.totalQuestions,
       selectedAnswer: state.selectedAnswer,

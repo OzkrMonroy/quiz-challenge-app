@@ -10,6 +10,7 @@ const SelectRegion = ({history}) => {
   const { createFirstQuestion, typeOfQuiz } = quizContext;
 
   useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     if(!typeOfQuiz){
       history.push(`${homeRoute}`)
     }
