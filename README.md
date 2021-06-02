@@ -45,4 +45,4 @@ You can find the challenge [here](https://devchallenges.io/challenges/Bu3G2irnaX
 
 
 
-[image]: https://firebasestorage.googleapis.com/v0/b/producthunt-647c4.appspot.com/o/countriesQuizScreenApp%2FcountriesQuizLaptop.png?alt=media&token=5f872d22-d476-4794-85fa-6099092b34e8 "Project screenshot"
+[image]: https://firebasestorage.googleapis.com/v0/b/producthunt-647c4.appspot.com/o/AppsScreenShots%2FcountriesQuizLaptopO-min.png?alt=media&token=b3db7019-19e5-444e-8cc2-688696dc6a77 "Project screenshot"
