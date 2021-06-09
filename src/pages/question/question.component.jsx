@@ -32,7 +32,7 @@ const QuestionPage = ({history}) => {
 
     if(questionsAsked === totalQuestions){
       setTimeout(() => {
-        history.push(`${resultsRoute}`);
+        history.replace(`${resultsRoute}`);
       }, 1900);
       return;
     }

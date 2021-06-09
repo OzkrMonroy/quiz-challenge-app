@@ -14,7 +14,9 @@ const quizReducer = (state, action) => {
         allCountriesData: null,
         question: null,
         error: false,
-        region: action.payload
+        region: action.payload,
+        score: 0,
+        totalQuestionsAsked: 1,
       }
     case quizTypes.CREATE_FIRST_QUESTION_SUCCESS:
       return {

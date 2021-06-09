@@ -16,7 +16,7 @@ const ResultsPage = ({history}) => {
 
   const handleOnClick = () => {
     endGame();
-    history.push(`${homeRoute}`);
+    history.replace(`${homeRoute}`);
   }
 
   return (

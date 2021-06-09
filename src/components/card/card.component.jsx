@@ -1,13 +1,25 @@
 import Option from '../option/option.component';
 import { CardBody, CardButton, CardContainer, CardCounter, CardErrorContainer, CardFooter, CardHeader, CardLogo, CardQuestionContainer } from './card.styles';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import QuizContext from '../../context/quiz/quizContext';
+import { withRouter } from 'react-router';
 
-const Card = ({bodyTitle, options, eventHandler, inputName, showFlag, flagUrl }) => {
+const Card = ({bodyTitle, options, eventHandler, inputName, flagUrl, location }) => {
   const [optionSelected, setOptionSelected] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [showCounter, setShowCounter] = useState(false);
+  const [showFlag, setShowFlag] = useState(false);
   const quizContext = useContext(QuizContext);
-  const { question, totalQuestionsAsked, totalQuestions, error, isChecking } = quizContext;
+  const { totalQuestionsAsked, totalQuestions, error, isChecking, typeOfQuiz } = quizContext;
+
+  useEffect(() => {
+    if(location.pathname === '/question'){
+      setShowCounter(true);
+    }
+    if(typeOfQuiz === 'Flag' && location.pathname === '/question'){
+      setShowFlag(true);
+    }
+  }, [location, typeOfQuiz]);
 
   const handleOptionClick = optionValue => {
     setIsDisabled(false);
@@ -33,7 +45,7 @@ const Card = ({bodyTitle, options, eventHandler, inputName, showFlag, flagUrl })
             optionEventHandler={handleOptionClick} 
             inputName={inputName}/>
           ))}
-        {question && <CardCounter>{totalQuestionsAsked}/{totalQuestions}</CardCounter>}
+        {showCounter && <CardCounter>{totalQuestionsAsked}/{totalQuestions}</CardCounter>}
         {error && <CardErrorContainer>Ha ocurrido un error.</CardErrorContainer>}
         <CardFooter>
           {!isChecking && <CardButton onClick={() => eventHandler(optionSelected)} disabled={isDisabled}>Next</CardButton>}
@@ -43,4 +55,4 @@ const Card = ({bodyTitle, options, eventHandler, inputName, showFlag, flagUrl })
   )
 }
 
-export default Card;
+export default withRouter(Card);
