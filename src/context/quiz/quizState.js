@@ -24,15 +24,16 @@ const QuizState = (props) => {
       payload: region
     })
     try {
-      const response = await axios(`https://restcountries.eu/rest/v2/region/${region}`);
-      const coutriesData = await response.data;
+      const response = await axios(`https://restcountries.com/v3.1/region/${region.toLowerCase()}`);
+      const countriesData = await response.data;
       const typeOfQuiz = state.typeOfQuiz
 
-      const question = createOneQuestionByType(coutriesData, typeOfQuiz);
+      console.log('Data', countriesData);
+      const question = createOneQuestionByType(countriesData, typeOfQuiz);
       dispatch({
         type: quizTypes.CREATE_FIRST_QUESTION_SUCCESS,
         payload: {
-          countriesData: coutriesData, question
+          countriesData: countriesData, question
         }
       })
       history.push(`${questionRoute}`);
