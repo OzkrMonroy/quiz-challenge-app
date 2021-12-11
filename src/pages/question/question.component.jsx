@@ -10,7 +10,7 @@ const QuestionPage = ({history}) => {
   const { question, checkAnswer, totalQuestionsAsked, totalQuestions, typeOfQuiz } = quizContext;
   const [questionsAsked, setQuestionsAsked] = useState(1);
   const [titleToShow, setTitleToShow] = useState('');
-  const showFlagIcon = typeOfQuiz === 'Flag';
+  const showFlagIcon = typeOfQuiz === 'Flags';
 
   useEffect(() => {
     if(!typeOfQuiz){
@@ -39,7 +39,7 @@ const QuestionPage = ({history}) => {
   }
 
   const setTitle = (typeOfQuiz, question) => {
-    const title = typeOfQuiz === 'Flag' ? flagTitle : `${capitalTitle} ${question.content}?`;
+    const title = typeOfQuiz === 'Flags' ? flagTitle : `${capitalTitle} ${question.content}?`;
     return title;
   }
 

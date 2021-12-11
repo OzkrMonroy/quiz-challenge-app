@@ -28,7 +28,7 @@ const QuizState = (props) => {
       const countriesData = await response.data;
       const typeOfQuiz = state.typeOfQuiz
 
-      console.log('Data', countriesData);
+      // console.log('Data', countriesData);
       const question = createOneQuestionByType(countriesData, typeOfQuiz);
       dispatch({
         type: quizTypes.CREATE_FIRST_QUESTION_SUCCESS,

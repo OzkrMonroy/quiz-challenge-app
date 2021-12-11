@@ -16,7 +16,7 @@ const Card = ({bodyTitle, options, eventHandler, inputName, flagUrl, location })
     if(location.pathname === '/question'){
       setShowCounter(true);
     }
-    if(typeOfQuiz === 'Flag' && location.pathname === '/question'){
+    if(typeOfQuiz === 'Flags' && location.pathname === '/question'){
       setShowFlag(true);
     }
   }, [location, typeOfQuiz]);

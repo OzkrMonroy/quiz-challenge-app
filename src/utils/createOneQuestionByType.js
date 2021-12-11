@@ -8,9 +8,9 @@ const createOneQuestionByType = (data, typeOfQuiz) => {
   const answerAndQuestion = countries[randomIndex];
   countries.splice(randomIndex, 1)
 
-  const name = answerAndQuestion[`${countryOrFlag}`].common;
-  const capital = answerAndQuestion[`${nameOrCapital}`][0];
-  console.log('Capital selected', capital, name);
+  const name = quizType === 'capital' ? answerAndQuestion[`${countryOrFlag}`].common : answerAndQuestion[`${countryOrFlag}`].svg;
+  const capital = quizType === 'capital' ? answerAndQuestion[`${nameOrCapital}`][0] : answerAndQuestion[`${nameOrCapital}`].common;
+  // console.log('Capital selected', capital, name);
   const inputName = capital.replace(' ', '');
   let question = {};
   const disorderPosibleAnswers = createPosibleAnswers(countries, capital, nameOrCapital);
@@ -26,8 +26,8 @@ const createPosibleAnswers = (countriesData, capitalRequired, objProperty) => {
     const randomIndex = Math.floor(Math.random() * countriesData.length);
     const answer = countriesData[randomIndex];
     countriesData.splice(randomIndex, 1)
-    const randomCapital = answer[`${objProperty}`];
-    posibleAnswers.push(randomCapital[0])
+    const randomCapital = objProperty === 'capital' ? answer[`${objProperty}`][0] : answer[`${objProperty}`].common;
+    posibleAnswers.push(randomCapital)
   }
   posibleAnswers.push(capitalRequired);
   const disorderPosibleAnswers = disorderArray(posibleAnswers);
